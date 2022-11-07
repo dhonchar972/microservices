@@ -22,6 +22,7 @@ public class HelloController {
 
     @PostMapping
     public String helloPOST( @RequestBody HelloRequest request) {
+        // http://localhost:8080/hello/dmytro?lastName=honchar
         return String.format("{\"message\":\"Hello %s %s\"}",request.getFirstName(), request.getLastName());
     }
 }
