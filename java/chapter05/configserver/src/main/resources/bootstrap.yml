@@ -8,7 +8,7 @@ spring:
     config:
       server:
         native:
-          search-locations: classpath:/config
+          search-locations: classpath:/config # = src/main/resources/config                  # or # file:///Users/drago
           #git:
           # uri: https://github.com/ihuaylupo/config.git
           #searchPaths: licensingservice
