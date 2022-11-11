@@ -36,8 +36,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
      * @since 2018-09-12 
      */
     @ExceptionHandler(value = {Exception.class})
-    public @ResponseBody
-    ResponseEntity<ResponseWrapper> handleException(HttpServletRequest request,
+    public @ResponseBody ResponseEntity<ResponseWrapper> handleException(HttpServletRequest request,
                                                     ResponseWrapper responseWrapper) {
         return ResponseEntity.ok(responseWrapper);
     }
