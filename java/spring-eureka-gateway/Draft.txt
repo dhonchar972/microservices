@@ -1,0 +1,5 @@
+Default ports:
+    spring config server: 8888
+    eureka register server: 8761
+    spring api gateway: 8765
+    spring services: 0 or 8080...
