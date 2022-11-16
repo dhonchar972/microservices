@@ -3,3 +3,5 @@ spring:
     url: jdbc:postgresql://localhost:5432/eurekaDB
     username: root
     password: 1111
+  flyway:
+    locations: "classpath:db/migration"

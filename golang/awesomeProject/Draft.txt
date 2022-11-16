@@ -1,0 +1,5 @@
+Structur:
+	cmd - entry point
+	build - output
+	internal - internal project code
+	pkg - reusable(shared) code

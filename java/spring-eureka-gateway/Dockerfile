@@ -1,6 +1,3 @@
-FROM alpine:3.13
-
-RUN apk add openjdk17
+FROM openjdk:17-alphine
 COPY build/libs/app.jar /app.jar
-
 ENTRYPOINT ["java", "-jar", "/app.jar"]
