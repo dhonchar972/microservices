@@ -1,6 +1,3 @@
-/*
-Simple logrus implementation.
-*/
 package logging
 
 import (
@@ -13,7 +10,6 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// Custom hook for logrus.
 type writerHook struct {
 	Writer    []io.Writer
 	LogLevels []logrus.Level
@@ -24,40 +20,34 @@ func (hook *writerHook) Fire(entry *logrus.Entry) error {
 	if err != nil {
 		return err
 	}
-
 	for _, w := range hook.Writer {
 		w.Write([]byte(line))
 	}
-
 	return err
 }
 
-// Return logger levels.
 func (hook *writerHook) Levels() []logrus.Level {
 	return hook.LogLevels
 }
 
-var entry *logrus.Entry
+var e *logrus.Entry
 
 type Logger struct {
 	*logrus.Entry
 }
 
-// Return new logger instanec.
 func GetLogger() *Logger {
-	return &Logger{entry}
+	return &Logger{e}
 }
 
-// Return logger with parameters.
-func (log *Logger) GetLoggerWithField(k string, v interface{}) *Logger {
-	return &Logger{log.WithField(k, v)}
+func (l *Logger) GetLoggerWithField(k string, v interface{}) *Logger {
+	return &Logger{l.WithField(k, v)}
 }
 
-// Logger constructor.
 func init() {
-	log := logrus.New()
-	log.SetReportCaller(true)
-	log.Formatter = &logrus.TextFormatter{
+	l := logrus.New()
+	l.SetReportCaller(true)
+	l.Formatter = &logrus.TextFormatter{
 		CallerPrettyfier: func(frame *runtime.Frame) (function string, file string) {
 			filename := path.Base(frame.File)
 			return fmt.Sprintf("%s()", frame.Function), fmt.Sprintf("%s:%d", filename, frame.Line)
@@ -76,17 +66,14 @@ func init() {
 		panic(err)
 	}
 
-	log.SetOutput(io.Discard)
+	l.SetOutput(io.Discard)
 
-	log.AddHook(&writerHook{
+	l.AddHook(&writerHook{
 		Writer:    []io.Writer{allFile, os.Stdout},
 		LogLevels: logrus.AllLevels,
 	})
 
-	wrt := io.MultiWriter(os.Stdout, allFile)
-	log.SetOutput(wrt)
+	l.SetLevel(logrus.TraceLevel)
 
-	log.SetLevel(logrus.TraceLevel)
-
-	entry = logrus.NewEntry(log)
+	e = logrus.NewEntry(l)
 }

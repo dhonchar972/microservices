@@ -54,3 +54,4 @@ build/
 .vs/
 obj/
 bin/
+**.csproj.user

@@ -1,14 +1,19 @@
+/*
+Application entry point.
+*/
 package main
 
 import (
-	"github.com/julienschmidt/httprouter"
 	"restApi/internal/config"
 	"restApi/internal/domain/user"
 	"restApi/internal/server"
 	"restApi/pkg/logging"
+
+	"github.com/julienschmidt/httprouter"
 )
 
 func main() {
+	// Creating a new logger
 	log := logging.GetLogger()
 	router := httprouter.New()
 
