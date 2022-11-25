@@ -1,8 +1,6 @@
-from enum import unique
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import string
-from sqlalchemy.orm import backref
 import random
 
 db = SQLAlchemy()
@@ -13,7 +11,6 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.Text(), nullable=False)
-    username = db.Column(db.String(80), unique=True, nullable=False)
     created_at = db.Column(db.DateTime(), default=datetime.now())
     updated_at = db.Column(db.DateTime(), onupdate=datetime.now())
     bookmarks = db.relationship("Bookmark", backref="user")
@@ -33,10 +30,10 @@ class Bookmark(db.Model):
     updated_at = db.Column(db.DateTime(), onupdate=datetime.now())
 
     def generate_short_characters(self):
-        charecters = string.digits + string.ascii_letters
-        picked_chars = ''.join(random.choices(charecters, k=3))
+        characters = string.digits + string.ascii_letters
+        picked_chars = ''.join(random.choices(characters, k=3))
 
-        link=self.query.filter_by(short_url=picked_chars).first()
+        link = self.query.filter_by(short_url=picked_chars).first()
 
         if link:
             self.generate_short_characters()
@@ -46,7 +43,7 @@ class Bookmark(db.Model):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.short_url=self.generate_short_characters()
+        self.short_url = self.generate_short_characters()
 
     def __repr__(self) -> str:
         return 'Bookmark>>> {self.url}'
